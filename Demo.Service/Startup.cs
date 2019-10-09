@@ -30,12 +30,9 @@ namespace Demo.Service
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            //var connection1 = Configuration.GetConnectionString("DemoDB");
-            //services.AddDbContext<CarnivalDemoContext>(op => op.UseSqlServer(connection1));
-
-            //services.AddDbContext<olcdbContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("olcdb")));
-            services.AddDbContext<olcdbContext>(options => {
-                options.UseSqlServer(Configuration.GetConnectionString("olcdb"));
+            services.AddDbContext<mBarkDemoContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("mBarkDemoDB"));
             });
 
         }

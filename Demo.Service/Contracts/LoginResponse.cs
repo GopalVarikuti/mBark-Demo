@@ -8,22 +8,28 @@ namespace Demo.Service.Contracts
 {
     public class LoginResponse
     {
-        [JsonProperty("position")]
-        public string Position { get; set; }
+        [JsonProperty("access_token")]
+        public string Access_token { get; set; }
 
-        [JsonProperty("Role")]
-        public string Role { get; set; }
+        [JsonProperty("token_type")]
+        public string Token_type { get; set; }
 
-        [JsonProperty("status")]
-        public string Status { get; set; }
+        [JsonProperty("expires_in")]
+        public int Expires_in { get; set; }
 
-        [JsonProperty("message")]
-        public string Message { get; set; }
+        [JsonProperty("userName")]
+        public string UserName { get; set; }
 
-        [JsonProperty("timeInMillis")]
-        public long TimeInMillis { get; set; }
+        [JsonProperty("roles")]
+        public string Roles { get; set; }
 
-        [JsonProperty("responseCode")]
-        public string ResponseCode { get; set; }
+        [JsonProperty("initialPasswordChanged")]
+        public string InitialPasswordChanged { get; set; }
+
+        [JsonProperty("__invalid_name__.issued")]
+        public string invalidnameissued { get; set; }
+
+        [JsonProperty("__invalid_name__.expires ")]
+        public string invalidnameexpires { get; set; }
     }
 }

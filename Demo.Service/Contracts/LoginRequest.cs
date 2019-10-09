@@ -9,24 +9,22 @@ namespace Demo.Service.Contracts
 {
     public class LoginRequest
     {
-        [Required]
-        [JsonProperty("password")]
-        public string Password { get; set; }
+        public class RootObject
+        {
+            [JsonProperty("username")]
+            public string Username { get; set; }
 
-        [Required]
-        [JsonProperty("agentId")]
-        public string AgentId { get; set; }
+            [JsonProperty("password")]
+            public string Password { get; set; }
 
-        [Required]
-        [JsonProperty("deviceId")]
-        public string DeviceId { get; set; }
+            [JsonProperty("grant_type")]
+            public string Grant_type { get; set; }
 
-        [Required]
-        [JsonProperty("locationCode")]
-        public string LocationCode { get; set; }
+            [JsonProperty("client_id")]
+            public string Client_id { get; set; }
 
-        [Required]
-        [JsonProperty("utcDatetime")]
-        public string UtcDatetime { get; set; }
+            [JsonProperty("client_secret")]
+            public string Client_secret { get; set; }
+        }
     }
 }
