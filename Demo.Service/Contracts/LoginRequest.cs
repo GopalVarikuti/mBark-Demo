@@ -9,8 +9,6 @@ namespace Demo.Service.Contracts
 {
     public class LoginRequest
     {
-        public class RootObject
-        {
             [JsonProperty("username")]
             public string Username { get; set; }
 
@@ -24,7 +22,6 @@ namespace Demo.Service.Contracts
             public string Client_id { get; set; }
 
             [JsonProperty("client_secret")]
-            public string Client_secret { get; set; }
-        }
+            public string Client_secret { get; set; }        
     }
 }
