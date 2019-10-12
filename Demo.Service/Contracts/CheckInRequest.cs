@@ -46,14 +46,14 @@ namespace Demo.Service.Contracts
         public string docNumber { get; set; }
         public string guestId { get; set; }
         public string guestType { get; set; }
-        public int processingStatus { get; set; }
+        public string processingStatus { get; set; }
         public string purposeOfVisit { get; set; }
         public string requestedBy { get; set; }
         public string requestorName { get; set; }
         public string stateRoom { get; set; }
-        public int rowId { get; set; }
+        public string rowId { get; set; }
         public string sailDate { get; set; }
-        public string seqNo { get; set; }
+        public int seqNo { get; set; }
         public string shipCode { get; set; }
         public string voyNo { get; set; }
         public string shipName { get; set; }

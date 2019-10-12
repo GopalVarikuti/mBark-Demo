@@ -5,12 +5,10 @@ namespace Demo.Service.Models
 {
     public partial class Metadata
     {
-        public int Id { get; set; }
         public string ShipCode { get; set; }
         public string Voyno { get; set; }
         public string DocType { get; set; }
         public string DocName { get; set; }
-        public string Ageminor { get; set; }
         public string IsDocNumReq { get; set; }
         public string IsDocIssueDate { get; set; }
         public string IsDocExpdtReq { get; set; }
@@ -26,13 +24,14 @@ namespace Demo.Service.Models
         public string IsPassportReceiptReq { get; set; }
         public string IsPregQuestionsReq { get; set; }
         public string IsPlaceBirth { get; set; }
+        public string Ageminor { get; set; }
         public string CntryCode { get; set; }
         public string CntryName { get; set; }
         public string IsVisaWaiver { get; set; }
-        public string RecordType { get; set; }
         public string IsB1b2visaCheckIn { get; set; }
         public string IsAutoDeleteManifest { get; set; }
         public string IsRetryRfidlift { get; set; }
         public string OfflineTimeout { get; set; }
+        public string BookingNo { get; set; }
     }
 }
