@@ -38,6 +38,9 @@ namespace Demo.Service.Controllers
             IActionResult response = Unauthorized();
             var Parent = new Dictionary<string, object>();
 
+            var Errors = new List<object>();
+            var Warnings = new List<object>();
+
             using (mBarkDemoAppContext db = new mBarkDemoAppContext())
             {
                 try
@@ -61,17 +64,18 @@ namespace Demo.Service.Controllers
                     }
                     else
                     {
-
+                        Parent.Add("Errors", Errors.ToList());
+                        Parent.Add("Warning", Warnings.ToList());
+                        Parent.Add("HttpstatusCode", HttpStatusCode.BadRequest);
                     }
                 }
                 catch (Exception)
                 {
-
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "something went wrong");
                 }
-                
+
             }
             return this.Request.CreateResponse(HttpStatusCode.OK, Parent);
-            //return response //= Ok(new { token = tokenString });
         }
 
         private string GenerateJSONWebToken(LoginRequest loginrequest)
@@ -92,7 +96,7 @@ namespace Demo.Service.Controllers
         {
             LoginRequest user = null;
             //Validate the User Credentials  
-            if (loginrequest.Username == loginrequest.Username )
+            if (loginrequest.Username == loginrequest.Username)
             {
                 user = new LoginRequest { Username = loginrequest.Username, Password = loginrequest.Password };
             }

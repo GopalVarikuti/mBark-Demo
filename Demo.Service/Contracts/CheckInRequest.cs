@@ -60,6 +60,4 @@ namespace Demo.Service.Contracts
         public string title { get; set; }
         public string zone { get; set; }
     }
-
-   
 }
