@@ -93,17 +93,6 @@ namespace Demo.Service.Controllers
                         Parent.Add("timeinmillis", duration);
                         Parent.Add("httpstatusCode", HttpStatusCode.OK);
                     }
-                    /*else
-                    {
-                        Parent.Add("pstatus", entity.CheckInStatus);
-                        Parent.Add("Pmessage", "Guest Document Details not Updated");
-                        Parent.Add("Success", "False");
-                        Parent.Add("Pmessage", "Guest Document Details not Updated");
-                        Parent.Add("timeinmillis", duration);
-                        Parent.Add("Errors", Errors.ToList());
-                        Parent.Add("Warning", Warnings.ToList());
-                        Parent.Add("HttpstatusCode", checkInResponse.HttpStatusCode);  
-                    }*/
                 }
                 catch (Exception)
                 {
@@ -114,5 +103,3 @@ namespace Demo.Service.Controllers
         }
     }
 }
-
-

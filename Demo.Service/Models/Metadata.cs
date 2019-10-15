@@ -25,9 +25,6 @@ namespace Demo.Service.Models
         public string IsPregQuestionsReq { get; set; }
         public string IsPlaceBirth { get; set; }
         public string Ageminor { get; set; }
-        public string CntryCode { get; set; }
-        public string CntryName { get; set; }
-        public string IsVisaWaiver { get; set; }
         public string IsB1b2visaCheckIn { get; set; }
         public string IsAutoDeleteManifest { get; set; }
         public string IsRetryRfidlift { get; set; }

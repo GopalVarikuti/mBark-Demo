@@ -15,6 +15,7 @@ namespace Demo.Service.Models
         {
         }
 
+        public virtual DbSet<Country> Country { get; set; }
         public virtual DbSet<Manifest> Manifest { get; set; }
         public virtual DbSet<Metadata> Metadata { get; set; }
         public virtual DbSet<Userslogin> Userslogin { get; set; }
@@ -24,13 +25,34 @@ namespace Demo.Service.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=VGPCDOTNET-03\\SQLEXPRESS;Database=mBarkDemoApp;user id=sa;password=Welcome12$");
+                optionsBuilder.UseSqlServer("Server=VGPCDOTNET-03\\SQLEXPRESS;Database=mBarkDemoApp;user id = sa;password=Welcome12$");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
+
+            modelBuilder.Entity<Country>(entity =>
+            {
+                entity.HasKey(e => e.CntryCode);
+
+                entity.Property(e => e.CntryCode)
+                    .HasColumnName("cntryCode")
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.CntryName)
+                    .HasColumnName("cntryName")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IsVisaWaiver)
+                    .HasColumnName("isVisaWaiver")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
 
             modelBuilder.Entity<Manifest>(entity =>
             {
@@ -311,16 +333,6 @@ namespace Demo.Service.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.CntryCode)
-                    .HasColumnName("cntryCode")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CntryName)
-                    .HasColumnName("cntryName")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.DocName)
                     .HasColumnName("docName")
                     .HasMaxLength(50)
@@ -403,11 +415,6 @@ namespace Demo.Service.Models
 
                 entity.Property(e => e.IsRetryRfidlift)
                     .HasColumnName("isRetryRFIDLift")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.IsVisaWaiver)
-                    .HasColumnName("isVisaWaiver")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 

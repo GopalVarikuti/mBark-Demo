@@ -23,9 +23,6 @@ namespace Demo.Service.Controllers
         {
             //string shipid = manifest.ShipId;
 
-
-
-
             var metadatadetails = new Dictionary<string, object>();
             var metadata = new Dictionary<string, object>();
 
@@ -42,133 +39,130 @@ namespace Demo.Service.Controllers
 
             using (mBarkDemoAppContext db = new mBarkDemoAppContext())
             {
+
+                List<Metadata> Maninmetadata = db.Metadata.ToList();
+                List<Country> Countrydata = db.Country.ToList();
+
+                //var shipcode = Maninmetadata[0].ShipCode;
                 try
                 {
                     var watch = new Stopwatch();
                     watch.Start();
-                    var entity = db.Manifest.Where(e => (e.ShipId == shipid)).FirstOrDefault();
+                    var entity = db.Manifest.Where(e => (e.ShipCode == shipid)).FirstOrDefault(); //&& e.ShipCode == shipcode
 
-                    //var item = db.Manifest.ToList();
+                    var retList = new List<string>();
+                    retList.Add(entity.ToString());
 
-                    List<Manifest> manifestlist = db.Manifest.ToList();
-
-                    List<Metadata> Maninmetadata = db.Metadata.ToList();
-
-                    //List<Metadata> docum = db.Metadata.ToList();
-                    //List<Metadata> question = db.Metadata.ToList();
                     metadata.Add("voyno", entity.VoyNo);
 
-
-                    //documents list
-                    foreach (Metadata doc in Maninmetadata)
+                    for (int j = 0; j < Maninmetadata.Count; j++)
                     {
+                        //documents list
                         var testdoc = new Dictionary<string, object>();
-                        testdoc.Add("docName", doc.DocName);
-                        testdoc.Add("docType", doc.DocType);
-                        testdoc.Add("docValidityReq", doc.DocValidityReq);
+                        testdoc.Add("docName", Maninmetadata[j].DocName);
+                        testdoc.Add("docType", Maninmetadata[j].DocType);
+                        testdoc.Add("docValidityReq", Maninmetadata[j].DocValidityReq);
 
                         documents.Add(testdoc);
-                    }
 
-                    //questions list
-                    foreach (Metadata ques in Maninmetadata)
-                    {
+                        //questions list
+
                         var testquestion = new Dictionary<string, object>();
-                        testquestion.Add("questionNo", ques.QuestionNo);
-                        testquestion.Add("question", ques.Question);
-                        testquestion.Add("questionType", ques.QuestionType);
+                        testquestion.Add("questionNo", Maninmetadata[j].QuestionNo);
+                        testquestion.Add("question", Maninmetadata[j].Question);
+                        testquestion.Add("questionType", Maninmetadata[j].QuestionType);
 
                         questions.Add(testquestion);
-                    }
+                        //checkInParameters list
 
-                    //checkInParameters list
-                    foreach (Metadata check in Maninmetadata)
-                    {
                         var testcheckin = new Dictionary<string, object>();
-                        testcheckin.Add("isHealthQuestionsReq", check.IsHealthQuestionsReq);
-                        testcheckin.Add("isNonVisaWaiverAllowed", check.IsNonVisaWaiverAllowed);
-                        testcheckin.Add("isPassportReceiptReq", check.IsPassportReceiptReq);
-                        testcheckin.Add("isPregQuestionsReq", check.IsPregQuestionsReq);
-                        testcheckin.Add("isPlaceBirth", check.IsPlaceBirth);
-                        testcheckin.Add("ageMinor", check.Ageminor);
-                        testcheckin.Add("isB1B2VisaCheckin", check.IsB1b2visaCheckIn);
-                        testcheckin.Add("isAutoDeleteManifest", check.IsAutoDeleteManifest);
-                        testcheckin.Add("isRetryRFIDLift", check.IsRetryRfidlift);
-                        testcheckin.Add("offlineTimeout", check.OfflineTimeout);
+                        testcheckin.Add("isHealthQuestionsReq", Maninmetadata[j].IsHealthQuestionsReq);
+                        testcheckin.Add("isNonVisaWaiverAllowed", Maninmetadata[j].IsNonVisaWaiverAllowed);
+                        testcheckin.Add("isPassportReceiptReq", Maninmetadata[j].IsPassportReceiptReq);
+                        testcheckin.Add("isPregQuestionsReq", Maninmetadata[j].IsPregQuestionsReq);
+                        testcheckin.Add("isPlaceBirth", Maninmetadata[j].IsPlaceBirth);
+                        testcheckin.Add("ageMinor", Maninmetadata[j].Ageminor);
+                        testcheckin.Add("isB1B2VisaCheckin", Maninmetadata[j].IsB1b2visaCheckIn);
+                        testcheckin.Add("isAutoDeleteManifest", Maninmetadata[j].IsAutoDeleteManifest);
+                        testcheckin.Add("isRetryRFIDLift", Maninmetadata[j].IsRetryRfidlift);
+                        testcheckin.Add("offlineTimeout", Maninmetadata[j].OfflineTimeout);
 
                         checkInParameters.Add(testcheckin);
+
+                        //Country's list
+
+                        
                     }
 
-                    //Country's list
-
-                    //List<Metadata> country = db.Metadata.ToList();
-                    foreach (Metadata cou in Maninmetadata)
+                    for (int k = 0; k < Countrydata.Count; k++)
                     {
                         var testcountry = new Dictionary<string, object>();
-                        testcountry.Add("cntryCode", cou.CntryCode);
-                        testcountry.Add("cntryName", cou.CntryName);
-                        testcountry.Add("isVisaWaiver", cou.IsVisaWaiver);
+                        testcountry.Add("cntryCode", Countrydata[k].CntryCode);
+                        testcountry.Add("cntryName", Countrydata[k].CntryName);
+                        testcountry.Add("isVisaWaiver", Countrydata[k].IsVisaWaiver);
 
                         countries.Add(testcountry);
                     }
-                    for (int i = 0; i < manifestlist.Count; i++)
+
+
+                    for (int i = 0; i < retList.Count; i++)
                     {
                         var insidemanifest = new Dictionary<string, object>();
 
-                        insidemanifest.Add("voyNo", manifestlist[i].VoyNo);
-                        insidemanifest.Add("bookingNo", manifestlist[i].BookingNo);
-                        insidemanifest.Add("seqNo", manifestlist[i].SeqNo);
-                        insidemanifest.Add("guestId", manifestlist[i].GuestId);
-                        insidemanifest.Add("folio", manifestlist[i].Folio);
-                        insidemanifest.Add("authNo", manifestlist[i].AuthNo);
-                        insidemanifest.Add("lastName", manifestlist[i].LastName);
-                        insidemanifest.Add("firstName", manifestlist[i].FirstName);
-                        insidemanifest.Add("title", manifestlist[i].Title);
-                        insidemanifest.Add("gender", manifestlist[i].Gender);
-                        insidemanifest.Add("stateRoom", manifestlist[i].StateRoom);
-                        insidemanifest.Add("loyalty", manifestlist[i].Loyalty);
-                        insidemanifest.Add("isResponsible", manifestlist[i].IsResponsible);
-                        insidemanifest.Add("guestType", manifestlist[i].GuestType);
-                        insidemanifest.Add("docType", manifestlist[i].DocType);
-                        insidemanifest.Add("docNumber", manifestlist[i].DocNumber);
-                        insidemanifest.Add("docIssueDate", manifestlist[i].DocIssueDate);
-                        insidemanifest.Add("docExpiryDate", manifestlist[i].DocExpiryDate);
-                        insidemanifest.Add("docIssueCountry", manifestlist[i].DocIssueCountry);
-                        insidemanifest.Add("dateOfBirth", manifestlist[i].DateofBirth);
-                        insidemanifest.Add("placeOfBirth", manifestlist[i].PlaceofBirth);
-                        insidemanifest.Add("nationality", manifestlist[i].Nationality);
-                        insidemanifest.Add("flagStatus", manifestlist[i].FlagStatus);
-                        insidemanifest.Add("isOLC", manifestlist[i].IsOlc);
-                        insidemanifest.Add("ccHolderName", manifestlist[i].CcHolderName);
-                        insidemanifest.Add("ccMaskedNo", manifestlist[i].CcMaskedNo);
-                        insidemanifest.Add("ccExpiry", manifestlist[i].CcExpiry);
-                        insidemanifest.Add("ccType", manifestlist[i].CcType);
-                        insidemanifest.Add("ccToken", manifestlist[i].CcToken);
-                        insidemanifest.Add("shipCode", manifestlist[i].ShipCode);
-                        insidemanifest.Add("shipName", manifestlist[i].ShipName);
-                        insidemanifest.Add("embarkationDate", manifestlist[i].EmbarkationDate);
-                        insidemanifest.Add("guestStatus", manifestlist[i].GuestStatus);
-                        insidemanifest.Add("sailDate", manifestlist[i].SailDate);
-                        insidemanifest.Add("musterStation", manifestlist[i].MusterStation);
-                        insidemanifest.Add("checkInWindow", manifestlist[i].CheckInWindow);
-                        insidemanifest.Add("departTime", manifestlist[i].DepartTime);
-                        insidemanifest.Add("cabinCategory", manifestlist[i].CabinCategory);
-                        insidemanifest.Add("requestedBy", manifestlist[i].RequestedBy);
-                        insidemanifest.Add("requestorName", manifestlist[i].RequestorName);
-                        insidemanifest.Add("purposeOfVisit", manifestlist[i].PurposeofVisit);
-                        insidemanifest.Add("checkInStatus", manifestlist[i].CheckInStatus);
-                        insidemanifest.Add("isCheckedIn", manifestlist[i].IsCheckedIn);
-                        insidemanifest.Add("checkoutDate", manifestlist[i].CheckoutDate);
-                        insidemanifest.Add("guestImage", manifestlist[i].GuestImage);
-                        insidemanifest.Add("chkInDateTime", manifestlist[i].ChkInDateTime);
-                        insidemanifest.Add("pictureType", manifestlist[i].PictureType);
-                        insidemanifest.Add("gQuestionRes1", manifestlist[i].GQuestionRes1);
-                        insidemanifest.Add("gQuestionRes2", manifestlist[i].GQuestionRes2);
-                        insidemanifest.Add("pQuestionRes1", manifestlist[i].PQuestionRes1);
-                        insidemanifest.Add("pQuestionRes2", manifestlist[i].PQuestionRes2);
-                        insidemanifest.Add("barcode", manifestlist[i].Barcode);
-                        insidemanifest.Add("onboardStatus", manifestlist[i].OnboardStatus);
-                        insidemanifest.Add("zone", manifestlist[i].Zone);
+                        insidemanifest.Add("voyNo", entity.VoyNo);
+                        insidemanifest.Add("bookingNo", entity.BookingNo);
+                        insidemanifest.Add("seqNo", entity.SeqNo);
+                        insidemanifest.Add("guestId", entity.GuestId);
+                        insidemanifest.Add("folio", entity.Folio);
+                        insidemanifest.Add("authNo", entity.AuthNo);
+                        insidemanifest.Add("lastName", entity.LastName);
+                        insidemanifest.Add("firstName", entity.FirstName);
+                        insidemanifest.Add("title", entity.Title);
+                        insidemanifest.Add("gender", entity.Gender);
+                        insidemanifest.Add("stateRoom", entity.StateRoom);
+                        insidemanifest.Add("loyalty", entity.Loyalty);
+                        insidemanifest.Add("isResponsible", entity.IsResponsible);
+                        insidemanifest.Add("guestType", entity.GuestType);
+                        insidemanifest.Add("docType", entity.DocType);
+                        insidemanifest.Add("docNumber", entity.DocNumber);
+                        insidemanifest.Add("docIssueDate", entity.DocIssueDate);
+                        insidemanifest.Add("docExpiryDate", entity.DocExpiryDate);
+                        insidemanifest.Add("docIssueCountry", entity.DocIssueCountry);
+                        insidemanifest.Add("dateOfBirth", entity.DateofBirth);
+                        insidemanifest.Add("placeOfBirth", entity.PlaceofBirth);
+                        insidemanifest.Add("nationality", entity.Nationality);
+                        insidemanifest.Add("flagStatus", entity.FlagStatus);
+                        insidemanifest.Add("isOLC", entity.IsOlc);
+                        insidemanifest.Add("ccHolderName", entity.CcHolderName);
+                        insidemanifest.Add("ccMaskedNo", entity.CcMaskedNo);
+                        insidemanifest.Add("ccExpiry", entity.CcExpiry);
+                        insidemanifest.Add("ccType", entity.CcType);
+                        insidemanifest.Add("ccToken", entity.CcToken);
+                        insidemanifest.Add("shipCode", entity.ShipCode);
+                        insidemanifest.Add("shipName", entity.ShipName);
+                        insidemanifest.Add("embarkationDate", entity.EmbarkationDate);
+                        insidemanifest.Add("guestStatus", entity.GuestStatus);
+                        insidemanifest.Add("sailDate", entity.SailDate);
+                        insidemanifest.Add("musterStation", entity.MusterStation);
+                        insidemanifest.Add("checkInWindow", entity.CheckInWindow);
+                        insidemanifest.Add("departTime", entity.DepartTime);
+                        insidemanifest.Add("cabinCategory", entity.CabinCategory);
+                        insidemanifest.Add("requestedBy", entity.RequestedBy);
+                        insidemanifest.Add("requestorName", entity.RequestorName);
+                        insidemanifest.Add("purposeOfVisit", entity.PurposeofVisit);
+                        insidemanifest.Add("checkInStatus", entity.CheckInStatus);
+                        insidemanifest.Add("isCheckedIn", entity.IsCheckedIn);
+                        insidemanifest.Add("checkoutDate", entity.CheckoutDate);
+                        insidemanifest.Add("guestImage", entity.GuestImage);
+                        insidemanifest.Add("chkInDateTime", entity.ChkInDateTime);
+                        insidemanifest.Add("pictureType", entity.PictureType);
+                        insidemanifest.Add("gQuestionRes1", entity.GQuestionRes1);
+                        insidemanifest.Add("gQuestionRes2", entity.GQuestionRes2);
+                        insidemanifest.Add("pQuestionRes1", entity.PQuestionRes1);
+                        insidemanifest.Add("pQuestionRes2", entity.PQuestionRes2);
+                        insidemanifest.Add("barcode", entity.Barcode);
+                        insidemanifest.Add("onboardStatus", entity.OnboardStatus);
+                        insidemanifest.Add("zone", entity.Zone);
 
                         listmanifest.Add(insidemanifest);
                     }
@@ -176,7 +170,6 @@ namespace Demo.Service.Controllers
                     watch.Stop();
                     var duration = (watch.ElapsedMilliseconds).ToString();
 
-                    //metadatadetails.Add("documents", documents);
                     metadatadetails.Add("metadata", metadata);
                     metadata.Add("documents", documents);
 

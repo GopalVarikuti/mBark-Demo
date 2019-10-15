@@ -55,12 +55,13 @@ namespace Demo.Service.Controllers
 
                         Parent.Add("access_token", tokenString);
                         Parent.Add("token_type", "bearer");
-                        Parent.Add("expires_in", TimeSpan.FromDays(1));
+                       // Parent.Add("expires_in", TimeSpan.FromDays(1).TotalSeconds);
+                        Parent.Add("expires_in", TimeSpan.FromDays(1).TotalSeconds);
                         Parent.Add("userName", loginrequest.Username);
                         Parent.Add("roles", loginrequest.Username);
                         Parent.Add("initialPasswordChanged", "true");
-                        Parent.Add(".issued", DateTime.Now);
-                        Parent.Add(".expires", DateTime.Now.AddDays(1));
+                        Parent.Add(".issued", DateTime.Now.ToString("ddd, dd MMM yyy HH:mm:ss 'GMT'"));
+                        Parent.Add(".expires", DateTime.Now.AddDays(1).ToString("ddd, dd MMM yyy HH:mm:ss 'GMT'"));
                     }
                     else
                     {
