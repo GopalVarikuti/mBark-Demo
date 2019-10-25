@@ -56,6 +56,12 @@ namespace Demo.Service
             services.AddDbContext<mBarkDemoAppContext>(options => options.UseSqlServer(connection));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            /*services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "mBark Demo", Version = "v1" });
+                c.OperationFilter<AccessHeaderFilter>();
+            });*/
+
             services.AddDbContext<mBarkDemoAppContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("mBarkDemoAppDB"));
@@ -83,10 +89,20 @@ namespace Demo.Service
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseStaticFiles();
-            app.UseHttpsRedirection();
-            app.UseAuthentication();
-            app.UseMvc();
-        }
-    }
-}
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            /* app.UseSwagger();
+
+             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+             // specifying the Swagger JSON endpoint.
+             app.UseSwaggerUI(c =>
+             {
+                 c.SwaggerEndpoint("../swagger/v1/swagger.json", "mBark services V1");
+             });*/
+             app.UseStaticFiles();
+             app.UseHttpsRedirection();
+             app.UseAuthentication();
+             app.UseMvc();
+         }
+     }
+ }
